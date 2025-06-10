@@ -2,12 +2,12 @@ package com.example.auth_biblioteca.domin;
 
 import com.example.auth_biblioteca.DTO.LivroRequestDto;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
 
 @Entity
 @Table(name = "livros")
 @Getter
-@EqualsAndHashCode(of = "id")
+
 public class Livros {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
