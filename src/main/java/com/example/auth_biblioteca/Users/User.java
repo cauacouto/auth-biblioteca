@@ -23,12 +23,17 @@ public class User implements UserDetails {
     private String login;
     private String password;
     @Enumerated(EnumType.STRING)
-    private RoleUsers role;
+ private UserRole role;
 
+    public User(String login, String password,UserRole role) {
+        this.login = login;
+        this.password = password;
+        this.role = role;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (role == RoleUsers.BIBLIOTECARIO ) return List.of(new SimpleGrantedAuthority("ROLE_BIBLIOTECARIO"),new SimpleGrantedAuthority("ROLE_LEITOR"));
+        if(this.role == UserRole.BIBLIOTECARIO) return List.of(new SimpleGrantedAuthority("ROLE_BIBLIOTECARIO"),new SimpleGrantedAuthority("ROLE_LEITOR"));
         else return List.of(new SimpleGrantedAuthority("ROLE_LEITOR"));
     }
 
