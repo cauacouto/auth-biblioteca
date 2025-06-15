@@ -35,7 +35,9 @@ public class TokenService {
             JWT.require(algorithm)
                     .withIssuer("auth-Biblioteca")
                     .build()
-                    .verify(token);
+                    .verify(token)
+                    .getSubject();
+
 
         } catch (JWTCreationException e) {
 

@@ -1,5 +1,7 @@
 package com.example.auth_biblioteca.controller;
 
+import com.example.auth_biblioteca.Infra.Security.TokenService;
+import com.example.auth_biblioteca.Users.LoginResponseDTO;
 import com.example.auth_biblioteca.Users.RegisterDTO;
 import com.example.auth_biblioteca.Users.User;
 import com.example.auth_biblioteca.Users.authenticationDTO;
@@ -23,12 +25,17 @@ public class AuthenticationController {
 
     @Autowired
     private UsersRepository repository;
+    @Autowired
+    private TokenService tokenService;
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid authenticationDTO data){
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(),data.password());
         var auth = authenticationManager.authenticate(usernamePassword);
-        return ResponseEntity.ok().build();
+
+        var token = tokenService.generateToken((User) auth.getPrincipal());
+
+        return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
     @PostMapping("/register")
